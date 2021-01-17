@@ -58,11 +58,13 @@ function callSendAPI(sender_psid, response) {
       "message": response
     }
 
-       var http = require('http'); //the variable doesn't necessarily have to be named http
+
+      var request = require('request');
+
 
 
       // Send the HTTP request to the Messenger Platform
-        http.request({
+        request({
           "uri": "https://graph.facebook.com/v9.0/me/messages",
           "qs": { "access_token": "EAAEn2LHBPL4BAIZCxzw7PeEXVKdhHYLe0fUUF7BJL2M0uoFVwgD2gGpRcVyhYSTQWMuoaZCnmQIWlgZCdjhOZAr9XzmP2k5cXIE4UxkoZAuToFGRwseMqvUEnpFHb1ZCPZCIfhf6nqyH4jahrwoFBZBkocJWpw2lZC2TpVWxZAaz7xeQZDZD" },
           "method": "POST",
