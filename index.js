@@ -1,5 +1,13 @@
 'use strict';
 
+var Spellchecker = require("hunspell-spellchecker");
+
+var spellchecker = new Spellchecker();
+
+var DICT = spellchecker.parse({
+  aff: fs.readFileSync("./en_EN.aff"),
+  dic: fs.readFileSync("./en_EN.dic")
+});
 
 // Imports dependencies and set up http server
 const
@@ -19,9 +27,11 @@ function handleMessage(sender_psid, received_message) {
   // Check if the message contains text
   if (received_message.text) {    
 
+    var isRight = spellchecker.suggest(received_message.text)
+
     // Create the payload for a basic text message
     response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      "text": `You sent the message: "${isRight}". Now send me an image!`
     }
   }  
   
