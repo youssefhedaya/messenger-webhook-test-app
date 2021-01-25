@@ -9,6 +9,9 @@ var DICT = spellchecker.parse({
   dic: fs.readFileSync("./en_EN.dic")
 });
 
+spellchecker.use(DICT);
+
+
 // Imports dependencies and set up http server
 const
   express = require('express'),
