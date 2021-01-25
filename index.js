@@ -1,13 +1,13 @@
 'use strict';
 
-// var Spellchecker = require("hunspell-spellchecker");
+var Spellchecker = require("hunspell-spellchecker");
 
-// var spellchecker = new Spellchecker();
+var spellchecker = new Spellchecker();
 
-// var DICT = spellchecker.parse({
-//   aff: fs.readFileSync("./en_EN.aff"),
-//   dic: fs.readFileSync("./en_EN.dic")
-// });
+var DICT = spellchecker.parse({
+  aff: fs.readFileSync("./en_EN.aff"),
+  dic: fs.readFileSync("./en_EN.dic")
+});
 
 // Imports dependencies and set up http server
 const
@@ -27,7 +27,8 @@ function handleMessage(sender_psid, received_message) {
   // Check if the message contains text
   if (received_message.text) {    
 
-    // var isRight = spellchecker.suggest(received_message.text)
+    var isRight = spellchecker.suggest(received_message.text)
+    console.log("Here",isRight)
 
     // Create the payload for a basic text message
     response = {
