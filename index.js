@@ -69,7 +69,7 @@ function handleMessage(sender_psid, received_message) {
     let mkt = "en-US";
     let mode = "proof";
     let text = received_message.text;
-    console.log(received_message.text)
+    console.log("Message Recieved",received_message.text)
     let query_string = "?mkt=" + mkt + "&mode=" + mode;
     var reformed_text = ''
 
