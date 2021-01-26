@@ -104,20 +104,20 @@ function handleMessage(sender_psid, received_message) {
     });
   };
 
-  let response;
+  let responsee;
 
   console.log("text ref" ,reformed_text)
 
   if (reformed_text){
 
   // Create the payload for a basic text message
-  response = {
+  responsee = {
     "text": `Your corrected sentence: "${reformed_text}". `
   }
 }
 else {
 
-  response = {
+  responsee = {
     "text": `No mistakes in: "${received_message.text}". `
   }
 
@@ -130,7 +130,7 @@ else {
   req.write ("text=" + text);
   req.end ();
 
-  callSendAPI(sender_psid, response);  
+  callSendAPI(sender_psid, responsee);  
 
 
   
