@@ -106,6 +106,8 @@ function handleMessage(sender_psid, received_message) {
 
   let response;
 
+  console.log("text ref" ,reformed_text)
+
   if (reformed_text){
 
   // Create the payload for a basic text message
