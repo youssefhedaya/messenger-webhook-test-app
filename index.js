@@ -71,7 +71,7 @@ function handleMessage(sender_psid, received_message) {
     let text = received_message.text;
     console.log("Message Recieved",received_message.text)
     let query_string = "?mkt=" + mkt + "&mode=" + mode;
-    var reformed_text = ''
+    let reformed_text = ''
 
     let request_params = {
       method : 'POST',
