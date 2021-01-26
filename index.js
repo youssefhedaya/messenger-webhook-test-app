@@ -95,7 +95,7 @@ function handleMessage(sender_psid, received_message) {
             console.log(body_.flaggedTokens[i].suggestions[0].suggestion)
             reformed_text = reformed_text + body_.flaggedTokens[i].suggestions[0].suggestion
         }
-        
+        console.log(reformed_text)
         console.log (body_);
     });
     response.on ('error', function (e) {
