@@ -112,7 +112,7 @@ function handleMessage(sender_psid, received_message) {
   let response;
 
   // Check if the message contains text
-  if (received_message.text) {    
+  if (reformed_text) {    
 
     // Create the payload for a basic text message
     response = {
