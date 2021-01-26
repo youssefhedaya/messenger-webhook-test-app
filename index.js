@@ -69,7 +69,7 @@ function handleMessage(sender_psid, received_message) {
     let key = '6e4a1a8c4fc3404ba1dac42f755d2a10';
     let mkt = "en-US";
     let mode = "proof";
-    let text = received_message;
+    let text = received_message.text;
     let query_string = "?mkt=" + mkt + "&mode=" + mode;
     let reformed_text = ''
 
@@ -100,14 +100,11 @@ function handleMessage(sender_psid, received_message) {
 
         let res;
 
-
         // Create the payload for a basic text message
           res = {
             "text": `That's what we got, we corrected the following "${reformed_text}". `
           }
         
-      
-      
         callSendAPI(sender_psid, res);  
             
        
