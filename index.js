@@ -104,6 +104,11 @@ function handleMessage(sender_psid, received_message) {
     });
   };
 
+  let req = https.request (request_params, response_handler);
+  req.write ("text=" + text);
+  req.end ();
+
+
   let responsee;
 
   console.log("text ref" ,reformed_text)
@@ -124,11 +129,6 @@ else {
 }
 
 // Sends the response message
-
-
-  let req = https.request (request_params, response_handler);
-  req.write ("text=" + text);
-  req.end ();
 
   callSendAPI(sender_psid, responsee);  
 
