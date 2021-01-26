@@ -104,20 +104,33 @@ function handleMessage(sender_psid, received_message) {
     });
   };
 
+  let response;
+
+  if (reformed_text){
+
+  // Create the payload for a basic text message
+  response = {
+    "text": `Your corrected sentence: "${reformed_text}". `
+  }
+}
+else {
+
+  response = {
+    "text": `No mistakes in: "${received_message.text}". `
+  }
+
+}
+
+// Sends the response message
+callSendAPI(sender_psid, response);  
+
+
   let req = https.request (request_params, response_handler);
   req.write ("text=" + text);
   req.end ();
 
-  
-  let response;
 
-    // Create the payload for a basic text message
-    response = {
-      "text": `You sent the message: "${reformed_text}". Now send me an image!`
-    }
   
-  // Sends the response message
-  callSendAPI(sender_psid, response);  
 
 }
 
