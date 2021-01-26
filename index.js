@@ -1,5 +1,51 @@
 'use strict';
 
+let https = require ('https');
+let host = 'api.bing.microsoft.com';
+let path = '/v7.0/spellcheck';
+let key = '6e4a1a8c4fc3404ba1dac42f755d2a10';
+let mkt = "en-US";
+let mode = "spell";
+let text = "Hllo";
+let query_string = "?mkt=" + mkt + "&mode=" + mode + "&setlang" + "ar";
+
+let request_params = {
+  method : 'POST',
+  hostname : host,
+  path : path + query_string,
+  headers : {
+  'Content-Type' : 'application/x-www-form-urlencoded',
+  'Content-Length' : text.length + 5,
+    'Ocp-Apim-Subscription-Key' : key,
+  }
+};
+
+let response_handler = function (response) {
+let body = '';
+response.on ('data', function (d) {
+    body += d;
+});
+response.on ('end', function () {
+    let body_ = JSON.parse (body);
+    var reformed_text = ''
+
+    for (let i = 0 ; i < body_.flaggedTokens.length ; i++){
+        console.log(body_.flaggedTokens[i].suggestions[0].suggestion)
+        reformed_text = reformed_text + body_.flaggedTokens[i].suggestions[0].suggestion
+    }
+    
+    
+    console.log (reformed_text);
+    console.log (body_.flaggedTokens.length);
+});
+response.on ('error', function (e) {
+    console.log ('Error: ' + e.message);
+});
+};
+
+let req = https.request (request_params, response_handler);
+req.write ("text=" + text);
+req.end ();
 
 
 
@@ -24,6 +70,7 @@ function handleMessage(sender_psid, received_message) {
     let mode = "proof";
     let text = received_message.text;
     let query_string = "?mkt=" + mkt + "&mode=" + mode;
+    var reformed_text = ''
 
     let request_params = {
       method : 'POST',
@@ -43,6 +90,12 @@ function handleMessage(sender_psid, received_message) {
     });
     response.on ('end', function () {
         let body_ = JSON.parse (body);
+
+        for (let i = 0 ; i < body_.flaggedTokens.length ; i++){
+            console.log(body_.flaggedTokens[i].suggestions[0].suggestion)
+            reformed_text = reformed_text + body_.flaggedTokens[i].suggestions[0].suggestion
+        }
+        
         console.log (body_);
     });
     response.on ('error', function (e) {
@@ -62,7 +115,7 @@ function handleMessage(sender_psid, received_message) {
 
     // Create the payload for a basic text message
     response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      "text": `You sent the message: "${reformed_text}". Now send me an image!`
     }
   }  
   
