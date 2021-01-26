@@ -106,7 +106,6 @@ function handleMessage(sender_psid, received_message) {
 
   let req = https.request (request_params, response_handler);
   req.write ("text=" + text);
-  req.end ();
 
 
   let responsee;
@@ -132,6 +131,7 @@ else {
 
   callSendAPI(sender_psid, responsee);  
 
+  req.end ();
 
   
 
