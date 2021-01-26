@@ -122,12 +122,13 @@ else {
 }
 
 // Sends the response message
-callSendAPI(sender_psid, response);  
 
 
   let req = https.request (request_params, response_handler);
   req.write ("text=" + text);
   req.end ();
+
+  callSendAPI(sender_psid, response);  
 
 
   
