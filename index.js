@@ -22,7 +22,7 @@ function handleMessage(sender_psid, received_message) {
     let key = '6e4a1a8c4fc3404ba1dac42f755d2a10';
     let mkt = "en-US";
     let mode = "proof";
-    let text = "Hollo, wrld!";
+    let text = received_message.text;
     let query_string = "?mkt=" + mkt + "&mode=" + mode;
 
     let request_params = {
