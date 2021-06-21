@@ -61,14 +61,31 @@ app.listen(process.env.PORT || 3000, () => console.log('webhook is listening'));
     
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
+    
+    let response_handler = function (response) {
+    let body = '';
+    response.on ('data', function (d) {
+        body += d;
+    });
+    response.on ('end', function () {
+        let body_ = JSON.parse (body);
 
+        let res;
      callSendAPI(sender_psid, "I Recieved the following ${{received_message}}");  
 
+        // Create the payload for a basic text message
+          res = {
+            "text": `Hello I just recieved your message `
+          }
+
+        callSendAPI(sender_psid, res);  
+
+
+
+    });
     response.on ('error', function (e) {
         console.log ('Error: ' + e.message);
     });
-  };
-
 
   let req = https.request (request_params, response_handler);
   req.write ("text=" + text);
