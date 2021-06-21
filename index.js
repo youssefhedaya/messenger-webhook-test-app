@@ -59,71 +59,83 @@ const
 app.listen(process.env.PORT || 3000, () => console.log('webhook is listening'));
 
     
-// Handles messages events
+// // Handles messages events
+// function handleMessage(sender_psid, received_message) {
+
+// //     // This is how to use Microsoft Bing Spell Checker 
+// // //     let https = require ('https');
+// // //     let host = 'api.bing.microsoft.com';
+// // //     let path = '/v7.0/spellcheck';
+// // //     let key = '6e4a1a8c4fc3404ba1dac42f755d2a10';
+// // //     let mkt = "en-US";
+// // //     let mode = "proof";
+// // //     let text = received_message;
+// // //     let query_string = "?mkt=" + mkt + "&mode=" + mode;
+// // //     let reformed_text = ''
+
+// // //     let request_params = {
+// // //       method : 'POST',
+// // //       hostname : host,
+// // //       path : path + query_string,
+// // //       headers : {
+// // //       'Content-Type' : 'application/x-www-form-urlencoded',
+// // //       'Content-Length' : text.length + 5,
+// // //         'Ocp-Apim-Subscription-Key' : key,
+// // //       }
+// // //   };
+
+// //   let response;
+// //   let response_handler = function (response) {
+// //     let body = '';
+// //     response.on ('data', function (d) {
+// //         body += d;
+// //     });
+// //     response.on ('end', function () {
+// //         let body_ = JSON.parse (body);
+
+// //         for (let i = 0 ; i < body_.flaggedTokens.length ; i++){
+// //             reformed_text = reformed_text + body_.flaggedTokens[i].suggestions[0].suggestion
+// //             reformed_text = reformed_text + ' '
+
+// //   if (received_message.text){
+// //         }
+
+// //   // Create the payload for a basic text message
+// //     response = {
+// //       "text": `That's what we got "${received_message.text}". `
+// //     }
+// //   }
+
+
+// //   callSendAPI(sender_psid, response);  
+
+
+// //     });
+// //     response.on ('error', function (e) {
+// //         console.log ('Error: ' + e.message);
+// //     });
+// //   };
+
+
+// //   let req = https.request (request_params, response_handler);
+// //   req.write ("text=" + text);
+// //   req.end ();
+
+//     let response;
+//     response = {
+//        "text": `That's what we got "${received_message.text}". `
+//        }
+    
+//     callSendAPI(sender_psid, response); 
+
+
+
+
+// }
+
 function handleMessage(sender_psid, received_message) {
-
-    // This is how to use Microsoft Bing Spell Checker 
-    let https = require ('https');
-    let host = 'api.bing.microsoft.com';
-    let path = '/v7.0/spellcheck';
-    let key = '6e4a1a8c4fc3404ba1dac42f755d2a10';
-    let mkt = "en-US";
-    let mode = "proof";
-    let text = received_message;
-    let query_string = "?mkt=" + mkt + "&mode=" + mode;
-    let reformed_text = ''
-
-    let request_params = {
-      method : 'POST',
-      hostname : host,
-      path : path + query_string,
-      headers : {
-      'Content-Type' : 'application/x-www-form-urlencoded',
-      'Content-Length' : text.length + 5,
-        'Ocp-Apim-Subscription-Key' : key,
-      }
-  };
-
-  let response;
-  let response_handler = function (response) {
-    let body = '';
-    response.on ('data', function (d) {
-        body += d;
-    });
-    response.on ('end', function () {
-        let body_ = JSON.parse (body);
-
-        for (let i = 0 ; i < body_.flaggedTokens.length ; i++){
-            reformed_text = reformed_text + body_.flaggedTokens[i].suggestions[0].suggestion
-            reformed_text = reformed_text + ' '
-
-  if (received_message.text){
-        }
-
-  // Create the payload for a basic text message
-    response = {
-      "text": `That's what we got "${received_message.text}". `
-    }
-  }
-
-
-  callSendAPI(sender_psid, response);  
-
-
-    });
-    response.on ('error', function (e) {
-        console.log ('Error: ' + e.message);
-    });
-  };
-
-
-  let req = https.request (request_params, response_handler);
-  req.write ("text=" + text);
-  req.end ();
-
-
-
-
+    
+      callSendAPI(sender_psid, received_message);
 
 }
 
