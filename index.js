@@ -92,17 +92,11 @@ function handleMessage(sender_psid, received_message) {
     response.on ('end', function () {
         let body_ = JSON.parse (body);
 
-        for (let i = 0 ; i < body_.flaggedTokens.length ; i++){
-            reformed_text = reformed_text + body_.flaggedTokens[i].suggestions[0].suggestion
-            reformed_text = reformed_text + ' '
-
-        }
-
         let res;
 
         // Create the payload for a basic text message
           res = {
-            "text": `That's what we got, we corrected the following "${reformed_text}". `
+            "text": `Hello I just recieved your message `
           }
         
         callSendAPI(sender_psid, res);  
