@@ -136,7 +136,7 @@ app.listen(process.env.PORT || 3000, () => console.log('webhook is listening'));
 function handleMessage(sender_psid, received_message) {
     
       let response;
-     response = { "text": received_message.text }
+     response = { "text": "I recieved your message" }
 
     
       callSendAPI(sender_psid,response );
