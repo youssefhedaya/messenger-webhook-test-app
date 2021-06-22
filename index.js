@@ -135,15 +135,26 @@ app.listen(process.env.PORT || 3000, () => console.log('webhook is listening'));
 
 function handleMessage(sender_psid, received_message) {
 
+  let date = new Date()
+
   let response;
 
   // Check if the message contains text
-  if (received_message.text) {    
+  if (received_message.text) {   
+    
+    if (received_message.text.includes("date") || received_message.text.includes("Date")){
+      response = {
+        "text": date.toString()
+      }
+    }
+    else {
+      response = {
+        "text": `I did not get "${received_message.text}". I'm here just to tell you today's exact date!`
+      }
+    }
 
     // Create the payload for a basic text message
-    response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
-    }
+ 
   }  
   
   // Sends the response message
@@ -184,7 +195,7 @@ function callSendAPI(sender_psid, response) {
       // Send the HTTP request to the Messenger Platform
         request({
           "uri": "https://graph.facebook.com/v9.0/me/messages",
-          "qs": { "access_token": "EAAEn2LHBPL4BAHgNBRIYcTpOhCArlN2v5hvl9BoTJpepZCh7mujWGOxH1YDVvMdei85rPutbrvjDEikssyrXTM9GvnQpW1tGojSY9zoqOCAbA786a1xLOp4MXVvFZChDI3gugB9YX6ExYxPnZCsRdocL0qKT4WuxfU4xqnNnnoQm5JQkR58" },
+          "qs": { "access_token": "EAAEn2LHBPL4BANlnmA0bbU3mtMuG0uqiQaZBtZCVhHmvgYvCO7p4MVopxfZBZAQZC7BQRXaRHUVeDB6gr7lnmfdFOzXWkUTfVPuUQzAeg70GYwgt2zj34hn0pTiyHEgOswjMjd0dFLoUZAHSib5eQXHNfy5U284MTkaDJPi2MflqGQMFCZASBjG" },
           "method": "POST",
           "json": request_body
         }, (err, res, body) => {
@@ -262,6 +273,9 @@ app.get('/webhook', (req, res) => {
       }
     }
   });
+
+  
+
 
   
 
