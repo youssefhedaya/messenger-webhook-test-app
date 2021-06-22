@@ -134,13 +134,20 @@ app.listen(process.env.PORT || 3000, () => console.log('webhook is listening'));
 // }
 
 function handleMessage(sender_psid, received_message) {
-    
-      let response;
-     response = { "text": "I recieved your message" }
 
-    
-      callSendAPI(sender_psid,response );
+  let response;
 
+  // Check if the message contains text
+  if (received_message.text) {    
+
+    // Create the payload for a basic text message
+    response = {
+      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+    }
+  }  
+  
+  // Sends the response message
+  callSendAPI(sender_psid, response);    
 }
 
 // Handles messaging_postbacks events
@@ -171,15 +178,13 @@ function callSendAPI(sender_psid, response) {
       "message": response
     }
 
-
-      var request = require('request');
-
-
+    console.log(response)
+        var request = require('request');
 
       // Send the HTTP request to the Messenger Platform
         request({
           "uri": "https://graph.facebook.com/v9.0/me/messages",
-          "qs": { "access_token": "EAAEn2LHBPL4BAP9SVmmRxlrHYXDxZAMkh1VxD38DoLEZC5CtGkeruMLKdVUvx4e9erasEZAXxUXTMUWJXyT0jEwZACRVusbd55Nq0ecnkwIMOVot22sxs4Hh8T6mgBJnjJ5lsyZBNZBmUFY1SkUiblfW8fIYgmZAIEEokCqFClzLkbM8srmCLp7" },
+          "qs": { "access_token": "EAAEn2LHBPL4BAOJgapRYF1cFYKHbfWTZBPhibrQldIywSIBWdm2iMo03zapGEPjFFW0DTrjgRYrcWKhZCZCkqbZCDy35O2SZBtrOh15ZASmgzbwhKdtOsmAR6MAyqxhcaFjUZAlbYpwjQ3hG2qWGVPQL4D5ImzwysMXjpXxeNdorZAHhimtNMIaH" },
           "method": "POST",
           "json": request_body
         }, (err, res, body) => {
@@ -259,3 +264,4 @@ app.get('/webhook', (req, res) => {
   });
 
   
+
