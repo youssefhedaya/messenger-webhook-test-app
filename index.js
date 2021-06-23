@@ -1,53 +1,5 @@
 'use strict';
 
-// let https = require ('https');
-// let host = 'api.bing.microsoft.com';
-// let path = '/v7.0/spellcheck';
-// let key = '6e4a1a8c4fc3404ba1dac42f755d2a10';
-// let mkt = "en-US";
-// let mode = "spell";
-// let text = "Hllo";
-// let query_string = "?mkt=" + mkt + "&mode=" + mode + "&setlang" + "ar";
-
-// let request_params = {
-//   method : 'POST',
-//   hostname : host,
-//   path : path + query_string,
-//   headers : {
-//   'Content-Type' : 'application/x-www-form-urlencoded',
-//   'Content-Length' : text.length + 5,
-//     'Ocp-Apim-Subscription-Key' : key,
-//   }
-// };
-
-// let response_handler = function (response) {
-// let body = '';
-// response.on ('data', function (d) {
-//     body += d;
-// });
-// response.on ('end', function () {
-//     let body_ = JSON.parse (body);
-//     var reformed_text = ''
-
-//     for (let i = 0 ; i < body_.flaggedTokens.length ; i++){
-//         console.log(body_.flaggedTokens[i].suggestions[0].suggestion)
-//         reformed_text = reformed_text + body_.flaggedTokens[i].suggestions[0].suggestion
-//     }
-    
-    
-//     console.log (reformed_text);
-//     console.log (body_.flaggedTokens.length);
-// });
-// response.on ('error', function (e) {
-//     console.log ('Error: ' + e.message);
-// });
-// };
-
-// let req = https.request (request_params, response_handler);
-// req.write ("text=" + text);
-// req.end ();
-
-
 
 // Imports dependencies and set up http server
 const
@@ -58,81 +10,6 @@ const
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 3000, () => console.log('webhook is listening'));
 
-    
-// // Handles messages events
-// function handleMessage(sender_psid, received_message) {
-
-// //     // This is how to use Microsoft Bing Spell Checker 
-// // //     let https = require ('https');
-// // //     let host = 'api.bing.microsoft.com';
-// // //     let path = '/v7.0/spellcheck';
-// // //     let key = '6e4a1a8c4fc3404ba1dac42f755d2a10';
-// // //     let mkt = "en-US";
-// // //     let mode = "proof";
-// // //     let text = received_message;
-// // //     let query_string = "?mkt=" + mkt + "&mode=" + mode;
-// // //     let reformed_text = ''
-
-// // //     let request_params = {
-// // //       method : 'POST',
-// // //       hostname : host,
-// // //       path : path + query_string,
-// // //       headers : {
-// // //       'Content-Type' : 'application/x-www-form-urlencoded',
-// // //       'Content-Length' : text.length + 5,
-// // //         'Ocp-Apim-Subscription-Key' : key,
-// // //       }
-// // //   };
-
-// //   let response;
-// //   let response_handler = function (response) {
-// //     let body = '';
-// //     response.on ('data', function (d) {
-// //         body += d;
-// //     });
-// //     response.on ('end', function () {
-// //         let body_ = JSON.parse (body);
-
-// //         for (let i = 0 ; i < body_.flaggedTokens.length ; i++){
-// //             reformed_text = reformed_text + body_.flaggedTokens[i].suggestions[0].suggestion
-// //             reformed_text = reformed_text + ' '
-
-// //   if (received_message.text){
-// //         }
-
-// //   // Create the payload for a basic text message
-// //     response = {
-// //       "text": `That's what we got "${received_message.text}". `
-// //     }
-// //   }
-
-
-// //   callSendAPI(sender_psid, response);  
-
-
-// //     });
-// //     response.on ('error', function (e) {
-// //         console.log ('Error: ' + e.message);
-// //     });
-// //   };
-
-
-// //   let req = https.request (request_params, response_handler);
-// //   req.write ("text=" + text);
-// //   req.end ();
-
-//     let response;
-//     response = {
-//        "text": `That's what we got "${received_message.text}". `
-//        }
-    
-//     callSendAPI(sender_psid, response); 
-
-
-
-
-// }
-
 function handleMessage(sender_psid, received_message) {
 
   let date = new Date()
@@ -141,8 +18,58 @@ function handleMessage(sender_psid, received_message) {
 
   // Check if the message contains text
   if (received_message.text) {   
+
+    if (received_message.text.includes("1")){
+      response={
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"generic",
+            "elements":[
+              {
+                "title":"Welcome!",
+                "image_url":"https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
+                "subtitle":"We have the right hat for everyone.",
+                "default_action": {
+                  "type": "web_url",
+                  "url": "https://petersfancybrownhats.com/view?item=103",
+                  "webview_height_ratio": "tall",
+              },
+              // "buttons":[
+              //   {
+              //     "type":"postback",
+              //     "title":"Next",
+              //     "payload":"Next"
+              //   },
+              //   {
+              //     "type":"phone_number",
+              //     "title":"Call us",
+              //     "payload":"+201006939205"
+              //   }
+              // ],
+              // "quick_replies":[
+              //   {
+              //     "content_type":"text",
+              //     "title":"Red",
+              //     "payload":"Hamada",
+              //   },{
+              //     "content_type":"text",
+              //     "title":"Green",
+              //     "payload":"Hamada Tany 5ales",
+              //   }
+              // ]
+            }
+            
+
+            ],
+          
+          }
+        }
+        
+    }
+    }
     
-    if (received_message.text.includes("date") || received_message.text.includes("Date")){
+    else if (received_message.text.includes("date") || received_message.text.includes("Date")){
       response = {
         "text": date.toString()
       }
@@ -166,13 +93,34 @@ function handlePostback(sender_psid, received_postback) {
   let response;
   
   // Get the payload for the postback
+  let title = received_postback.title;
   let payload = received_postback.payload;
 
+
   // Set the response based on the postback payload
-  if (payload === 'yes') {
-    response = { "text": "Thanks!" }
-  } else if (payload === 'no') {
-    response = { "text": "Oops, try sending another image." }
+  if (title === 'Call Us') {
+    response = {
+
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"button",
+          "text":"You Can Call Us !",
+          "buttons":[
+            {
+              "type":"phone_number",
+              "title":"Call Now",
+              "payload" : payload
+            }
+          ]
+        }
+      }
+
+
+
+    }
+  } else if (title === 'Services') {
+    response = { "text": "We have no services" }
   }
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
@@ -194,8 +142,8 @@ function callSendAPI(sender_psid, response) {
 
       // Send the HTTP request to the Messenger Platform
         request({
-          "uri": "https://graph.facebook.com/v9.0/me/messages",
-          "qs": { "access_token": "EAAEn2LHBPL4BANlnmA0bbU3mtMuG0uqiQaZBtZCVhHmvgYvCO7p4MVopxfZBZAQZC7BQRXaRHUVeDB6gr7lnmfdFOzXWkUTfVPuUQzAeg70GYwgt2zj34hn0pTiyHEgOswjMjd0dFLoUZAHSib5eQXHNfy5U284MTkaDJPi2MflqGQMFCZASBjG" },
+          "uri": "https://graph.facebook.com/v11.0/me/messages",
+          "qs": { "access_token": "EAAMRj0MjGYcBALCYS4W2CkAoLlPYT340uDiGLWDJnM1gaAhwZBNYZA7SHRC9VjBJK5vt28GPz8V2ZAz7JxcckxwyVxEvGsYifH7axcXDhHq2DLmwrCPNmLjkM1ZBmUDVNjCi2Hxv4UQ4kwi5H0GPjwNs4PdVhfrRjp2K4EJ1i2nt5JYRskSR" },
           "method": "POST",
           "json": request_body
         }, (err, res, body) => {
@@ -275,6 +223,8 @@ app.get('/webhook', (req, res) => {
   });
 
   
+
+
 
 
   
